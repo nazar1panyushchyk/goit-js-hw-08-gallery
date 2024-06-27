@@ -64,12 +64,61 @@ const galleryItems = [
     },
   ];
 
-// const galleryImg = document.querySelector('.js-gallery');
-
-// const addImg = document.createElement('img');
-// addImg.src = 'https://cdn.pixabay.com/photo/2019/05/14/16/43/himilayan-blue-poppy-4202825__340.jpg';
-// addImg.alt = 'image';
-
-
-// galleryImg.appendChild(addImg)
+  const jsGallery = document.querySelector(".js-gallery");
+  const lightboxImage = document.querySelector('.lightbox__image');
+  const lightboxModal = document.querySelector(".lightbox");
+  const closeButton = document.querySelector('[data-action="close-lightbox"]');
+  // const currentLink = document.getElementById('currentLink');
+  
+  
+  function createGalleryMarkup(items) {
+    return items.map(({preview, original, description}) => {
+      console.log(preview, original, description);
+  
+      return `
+        <li class="gallery__item">
+        <a
+          class="gallery__link"
+          href="${original}"
+        >
+          <img
+            class="gallery__image"
+            src="${preview}"
+            data-source="${original}"
+            alt="${description}"
+          />
+        </a>
+      </li>
+    `;
+  }).join('');
+  
+  }
+  
+  const galleryData = createGalleryMarkup(galleryItems)
+  
+  jsGallery.insertAdjacentHTML('afterbegin', galleryData)
+  
+  
+  function openModalWindow(img) {
+    lightboxModal.classList.add('is-open');
+    lightboxImage.src = img;
+  }
+  
+  function closeModalWindow() {
+    lightboxModal.classList.add('is-open');
+    lightboxImage.src = '';
+  }
+  
+  
+  function originalPath(event) {
+    event.preventDefault();
+    if(event.target.classList.contains('gallery__image')) {
+    const bigImgUrl =  event.target.dataset.source;
+    openModalWindow(bigImgUrl)
+    }
+    
+  }
+  
+  jsGallery.addEventListener('click', originalPath) 
+  closeButton.addEventListener('click', closeModalWindow)
 

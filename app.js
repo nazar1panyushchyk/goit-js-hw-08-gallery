@@ -105,7 +105,7 @@ const galleryItems = [
   }
   
   function closeModalWindow() {
-    lightboxModal.classList.add('is-open');
+    lightboxModal.classList.remove('is-open');
     lightboxImage.src = '';
   }
   
